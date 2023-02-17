@@ -18,6 +18,7 @@ const questions = [
 
 let currentQuestion = 0;
 let score = 0;
+let timerId;
 
 const questionEl = document.getElementById("question");
 const answer1El = document.getElementById("answer1");
@@ -33,9 +34,11 @@ const loadQuestion = () => {
   answer1El.innerHTML = currentQuestionData.answers[0];
   answer2El.innerHTML = currentQuestionData.answers[1];
   answer3El.innerHTML = currentQuestionData.answers[2];
+  startTimer();
 };
 
 const checkAnswer = (answer) => {
+  clearTimeout(timerId);
   const correctAnswer = questions[currentQuestion].correctAnswer;
   if (answer === correctAnswer) {
     score++;
@@ -46,7 +49,9 @@ const checkAnswer = (answer) => {
     scoreEl.innerHTML = `Score: ${score}`;
     document.querySelector(`#answer${answer + 1}`).classList.add("incorrect");
   }
+
   document.querySelector("#question-tile").classList.add("hidden");
+  
   setTimeout(() => {
     document.querySelector(`#answer${answer + 1}`).classList.remove("correct");
     document.querySelector(`#answer${answer + 1}`).classList.remove("incorrect");
@@ -56,9 +61,31 @@ const checkAnswer = (answer) => {
     }
     document.querySelector("#question-tile").classList.remove("hidden");
     loadQuestion();
-  }, 10);
+  }, 500);
 };
 
+const startTimer = () => {
+  let timeLeft = 10;
+  timerId = setInterval(() => {
+    if (timeLeft <= 0) {
+      clearInterval(timerId);
+      score--;
+      scoreEl.innerHTML = `Score: ${score}`;
+      document.querySelector("#question-tile").classList.add("hidden");
+      setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion >= questions.length) {
+          currentQuestion = 0;
+        }
+        document.querySelector("#question-tile").classList.remove("hidden");
+        loadQuestion();
+      }, 1000);
+    } else {
+      tileEl.innerHTML = `Time left: ${timeLeft} seconds`;
+      timeLeft--;
+    }
+  }, 500);
+};
 
 answer1El.addEventListener("click", () => {
   checkAnswer(0);

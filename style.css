@@ -16,7 +16,7 @@
   height: 20vh;
   border-radius: 10px;
   position: center;
-  animation: fall 10s ease-in-out forwards infinite;
+  animation: fall 10s ease-in-out forwards;
   border:2px solid #888888;
   animation-play-state: running;
   text-align: center;
@@ -35,10 +35,12 @@
   from {
     top: 100%;
     transform: translateY(0%);
+    overflow:hidden;
   }
   to {
     bottom: -100%;;
     transform: translateY(265%);
+    visibility:hidden;
   }
 }
 
@@ -57,6 +59,18 @@
   border: none;
   cursor: pointer;
   width: 30%;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 #answer-buttons button.correct {
