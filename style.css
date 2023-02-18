@@ -1,6 +1,8 @@
 #container {
-  width: 700px;
-  height: 75vh;
+  top: 50%;
+  bottom: 50%;
+  top: 650px;
+  height: 72vh;
   display: center;
   flex-direction: column;
   align-items: center;
@@ -16,7 +18,7 @@
   height: 20vh;
   border-radius: 10px;
   position: center;
-  animation: fall 10s ease-in-out forwards;
+  animation: fall 10s ease-in-out forwards infinite;
   border:2px solid #888888;
   animation-play-state: running;
   text-align: center;
@@ -35,12 +37,12 @@
   from {
     top: 100%;
     transform: translateY(0%);
-    overflow:hidden;
+    /* overflow:hidden; */
   }
   to {
-    bottom: -100%;;
+    bottom: -50%;;
     transform: translateY(265%);
-    visibility:hidden;
+    /* visibility:hidden; */
   }
 }
 

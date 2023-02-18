@@ -12,7 +12,7 @@ const questions = [
   {
     question: "What is the capital of Germany?",
     answers: ["London", "Paris", "Berlin"],
-    correctAnswer: 2
+    correctAnswer: 2    
   },
 ];
 
