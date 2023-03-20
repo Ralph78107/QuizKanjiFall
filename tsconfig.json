@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "outDir": "./dist",
+        "allowJs": true,
+        "strict": true
+    },
+    "files": [
+        "C:/Users/PCUSER/Documents/GitHub/QuizKanjiFall/scripts.js"
+    ]
+}
