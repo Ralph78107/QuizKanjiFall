@@ -16,7 +16,8 @@
   height: 20vh;
   border-radius: 10px;
   position: center;
-  animation: fall 10s ease-in-out forwards infinite;
+  animation: fall 10s ease-in-out forwards;
+  /* animation: fall 10s ease-in-out forwards infinite; */
   border:2px solid #888888;
   animation-play-state: running;
   text-align: center;
