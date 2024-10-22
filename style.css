@@ -1,8 +1,17 @@
+#countdown {
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 1rem;
+  background-color: #333;
+  position: fixed;  /* Fixed position to stay at the top */
+  top: 0;           /* At the top of the page */
+  width: 100%;      /* Spans the entire width */
+  z-index: 100;     /* Makes sure it stays on top */
+}
+
 #container {
-  top: 50%;
-  bottom: 50%;
-  top: 650px;
-  height: 72vh;
+  width: 700px;
+  height: 75vh;
   display: center;
   flex-direction: column;
   align-items: center;
@@ -38,12 +47,10 @@
   from {
     top: 100%;
     transform: translateY(0%);
-    /* overflow:hidden; */
   }
   to {
-    bottom: -50%;;
+    bottom: -100%;;
     transform: translateY(265%);
-    /* visibility:hidden; */
   }
 }
 
@@ -64,18 +71,6 @@
   width: 30%;
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 #answer-buttons button.correct {
   background-color: green;
 }
@@ -85,5 +80,6 @@
 }
 
 #scoreboard {
-  margin-top: 20px;
+  margin-top: 20%;
+  align-content: center;
 }

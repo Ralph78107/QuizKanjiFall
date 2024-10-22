@@ -9,7 +9,8 @@ const questions = [
     answers: ["park", "river", "stream"],
     correctAnswer: 1
   },
-    {question: "森",
+  {
+    question: "森",
     answers: ["Mountain", "tree", "Forest"],
     correctAnswer: 2    
   },
@@ -24,7 +25,6 @@ const answer1El = document.getElementById("answer1");
 const answer2El = document.getElementById("answer2");
 const answer3El = document.getElementById("answer3");
 const scoreEl = document.getElementById("score");
-const tileEl = document.getElementById("tile");
 const questionTile = document.getElementById("question-tile");
 
 const shuffle = (arr) => {
@@ -39,34 +39,36 @@ const loadQuestion = () => {
   const currentQuestionData = questions[currentQuestion];
   questionEl.innerHTML = currentQuestionData.question;
 
+  // Shuffle answers correctly
   const shuffledAnswers = shuffle(currentQuestionData.answers);
   answer1El.innerHTML = shuffledAnswers[0];
   answer2El.innerHTML = shuffledAnswers[1];
   answer3El.innerHTML = shuffledAnswers[2];
-  answer1El.innerHTML = currentQuestionData.answers[0];
-  answer2El.innerHTML = currentQuestionData.answers[1];
-  answer3El.innerHTML = currentQuestionData.answers[2];
+
   startTimer();
 };
 
-const checkAnswer = (answer) => {
+const checkAnswer = (answerIndex) => {
   clearTimeout(timerId);
-  const correctAnswer = questions[currentQuestion].correctAnswer;
-  if (answer === correctAnswer) {
+  const correctAnswerIndex = questions[currentQuestion].correctAnswer;
+  const correctAnswerText = questions[currentQuestion].answers[correctAnswerIndex];
+  const selectedAnswerText = document.querySelector(`#answer${answerIndex + 1}`).innerHTML;
+
+  if (selectedAnswerText === correctAnswerText) {
     score++;
     scoreEl.innerHTML = `Score: ${score}`;
-    document.querySelector(`#answer${answer + 1}`).classList.add("correct");
+    document.querySelector(`#answer${answerIndex + 1}`).classList.add("correct");
   } else {
     score--;
     scoreEl.innerHTML = `Score: ${score}`;
-    document.querySelector(`#answer${answer + 1}`).classList.add("incorrect");
+    document.querySelector(`#answer${answerIndex + 1}`).classList.add("incorrect");
   }
 
   document.querySelector("#question-tile").classList.add("hidden");
-  
+
   setTimeout(() => {
-    document.querySelector(`#answer${answer + 1}`).classList.remove("correct");
-    document.querySelector(`#answer${answer + 1}`).classList.remove("incorrect");
+    document.querySelector(`#answer${answerIndex + 1}`).classList.remove("correct");
+    document.querySelector(`#answer${answerIndex + 1}`).classList.remove("incorrect");
     currentQuestion = Math.floor(Math.random() * questions.length);
     document.querySelector("#question-tile").classList.remove("hidden");
     loadQuestion();
@@ -90,12 +92,13 @@ const startTimer = () => {
         loadQuestion();
       }, 1000);
     } else {
-      tileEl.innerHTML = `Time left: ${timeLeft} seconds`;
+      questionTile.innerHTML = `Time left: ${timeLeft} seconds`;
       timeLeft--;
     }
-  }, 500);
+  }, 1000);  // Adjusted the timer interval to 1 second
 };
 
+// Attach event listeners to the buttons
 answer1El.addEventListener("click", () => {
   checkAnswer(0);
 });
@@ -106,4 +109,5 @@ answer3El.addEventListener("click", () => {
   checkAnswer(2);
 });
 
+// Load the first question
 loadQuestion();
