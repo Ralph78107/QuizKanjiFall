@@ -17,24 +17,26 @@ let questionInProgress = false;
 const loadNewQuestion = () => {
   questionInProgress = true;
 
+  // Pick a random Kanji question
   const q = kanjiData[Math.floor(Math.random() * kanjiData.length)];
+
+  // Randomly assign correct/incorrect to left/right
   const isCorrectLeft = Math.random() < 0.5;
 
-  // Hide the Kanji until animation starts
-  kanjiEl.classList.add("hidden");
+  // Hide Kanji and reset animation
+  kanjiEl.classList.remove("visible"); // For fade-out
   kanjiEl.textContent = q.kanji;
 
-  // Reset the animation
   fallingKanji.style.animation = "none";
-  void fallingKanji.offsetWidth; // Force reflow
+  void fallingKanji.offsetWidth; // Force reflow to reset animation
 
-  // Show the Kanji right before animation starts
+  // Show Kanji again with fade-in and falling animation
   setTimeout(() => {
-    kanjiEl.classList.remove("hidden");
+    kanjiEl.classList.add("visible"); // For fade-in
     fallingKanji.style.animation = "fall 5s linear forwards";
-  }, 100); // Slight delay ensures visibility syncs with animation
+  }, 50);
 
-  // Set answer options
+  // Assign text and handlers to buttons
   if (isCorrectLeft) {
     option1.textContent = q.correct;
     option2.textContent = q.incorrect;
@@ -47,12 +49,11 @@ const loadNewQuestion = () => {
     option2.onclick = () => answer(true);
   }
 
+  // Enable buttons
   option1.disabled = false;
   option2.disabled = false;
 };
 
-
-// Handle user answer
 const answer = (isCorrect) => {
   if (!questionInProgress) return;
   questionInProgress = false;
@@ -68,18 +69,19 @@ const answer = (isCorrect) => {
 
   scoreEl.textContent = score;
 
-  // Cancel the animation and trigger the next question manually
+  // Cancel current animation and load next
   fallingKanji.style.animation = "none";
   void fallingKanji.offsetWidth;
-  setTimeout(() => loadNewQuestion(), 300); // Small pause before next question
+
+  setTimeout(() => loadNewQuestion(), 300); // slight pause before next
 };
 
-// Automatically go to next question if the kanji hits the ground
 fallingKanji.addEventListener("animationend", () => {
   if (!questionInProgress) return;
   questionInProgress = false;
 
-  score--; // Penalize for no answer
+  // Timeout penalty
+  score--;
   scoreEl.textContent = score;
 
   option1.disabled = true;

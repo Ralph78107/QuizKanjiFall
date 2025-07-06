@@ -61,6 +61,11 @@ body {
   font-size: 1.2rem;
 }
 
-#kanji.hidden {
-  visibility: hidden;
+#kanji {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+#kanji.visible {
+  opacity: 1;
 }
