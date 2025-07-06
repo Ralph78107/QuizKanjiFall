@@ -1,35 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KanjiFall</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kanji Fall Quiz</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- Timer at the top of the page -->
-    <div id="timer">Time left: 10 seconds</div>
+  <div id="game-container">
+    <div id="falling-kanji">
+      <span id="kanji">本</span>
+    </div>
 
-    <div id="container">
-        <!-- Question Tile -->
-        <div id="question-tile">
-            <div id="question">What is 2 + 2?</div>
-        </div>
+    <div id="buttons">
+      <button id="option1">Option 1</button>
+      <button id="option2">Option 2</button>
+    </div>
 
-        <!-- Answer Buttons -->
-        <div id="answer-buttons">
-            <button id="answer1">2</button>
-            <button id="answer2">4</button>
-            <button id="answer3">6</button>
-        </div>
+    <div id="scoreboard">Score: <span id="score">0</span></div>
+  </div>
 
-        <!-- Scoreboard -->
-        <div id="scoreboard">
-            <span id="score">Score: 0</span>
-        </div>
-    </div>    
-
-    <script src="scripts.js"></script> 
+  <script src="script.js"></script>
 </body>
 </html>
