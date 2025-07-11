@@ -8,6 +8,11 @@
 </head>
 <body>
   <div id="game-container">
+    <div id="progress-text">Question 0 of 5</div>
+    <div id="progress-container">
+      <div id="progress-fill"></div>
+    </div>
+
     <div id="falling-kanji">
       <span id="kanji">本</span>
     </div>
@@ -17,14 +22,14 @@
       <button id="option2">Option 2</button>
     </div>
 
-<div id="'progress-container">
-     <div id="progress-text">Question 1 of 5</div>
-     <div id="progress-bar">
-        <div id="progress-fill"></div>
-  </div> 
-</div> 
-
     <div id="scoreboard">Score: <span id="score">0</span></div>
+  </div>
+
+  <div id="game-over">
+    <h2>Game Over</h2>
+    <p id="final-score"></p>
+    <button id="restart-btn">Play Again</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
