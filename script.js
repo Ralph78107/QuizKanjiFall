@@ -61,20 +61,25 @@ const answer = (isCorrect) => {
   option1.disabled = true;
   option2.disabled = true;
 
-  if (isCorrect) {
-    score++;
-  } else {
-    score--;
-  }
+  // Feedback effect (optional flash color)
+  document.body.style.backgroundColor = isCorrect ? "#d0f8ce" : "#ffcdd2";
 
+  setTimeout(() => {
+    document.body.style.backgroundColor = "#f0f0f0"; // revert background
+  }, 200);
+
+  // Update score
+  score += isCorrect ? 1 : -1;
   scoreEl.textContent = score;
 
-  // Cancel current animation and load next
-  fallingKanji.style.animation = "none";
-  void fallingKanji.offsetWidth;
+  // Fade out kanji before next question
+  kanjiEl.classList.remove("visible");
 
-  setTimeout(() => loadNewQuestion(), 300); // slight pause before next
+  setTimeout(() => {
+    loadNewQuestion();
+  }, 500); // wait for fade-out
 };
+
 
 fallingKanji.addEventListener("animationend", () => {
   if (!questionInProgress) return;
@@ -86,6 +91,9 @@ fallingKanji.addEventListener("animationend", () => {
 
   option1.disabled = true;
   option2.disabled = true;
+
+  // Fade out kanji before loading next
+  kanjiEl.classList.remove("visible");
 
   setTimeout(() => loadNewQuestion(), 500);
 });
