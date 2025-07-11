@@ -21,45 +21,57 @@ const kanjiData = [
   { kanji: "車", correct: "car", incorrect: "train" },
 ];
 
-
+const MAX_QUESTIONS = 5;
+let questionCount = 0;
 let score = 0;
+
 const scoreEl = document.getElementById("score");
 const kanjiEl = document.getElementById("kanji");
 const option1 = document.getElementById("option1");
 const option2 = document.getElementById("option2");
 const fallingKanji = document.getElementById("falling-kanji");
 
+const progressText = document.getElementById("progress-text");
+const progressFill = document.getElementById("progress-fill");
+
 let questionInProgress = false;
 
 // Sound effects
 const correctSound = new Audio("sounds/correct.wav");
-const wrongSound = new Audio("sounds/wrong.mp3");
+const wrongSound = new Audio("sounds/wrong.wav");
 const fallSound = new Audio("sounds/fall.wav");
+correctSound.load();
+wrongSound.load();
+fallSound.load();
 
 const loadNewQuestion = () => {
+  if (questionCount >= MAX_QUESTIONS) {
+    alert(`Game over! Your score is ${score}/${MAX_QUESTIONS}`);
+    return;
+  }
+
   questionInProgress = true;
+  questionCount++;
 
-  // Pick a random Kanji question
+  // Update progress display
+  progressText.textContent = `Question ${questionCount} of ${MAX_QUESTIONS}`;
+  progressFill.style.width = `${(questionCount / MAX_QUESTIONS) * 100}%`;
+
   const q = kanjiData[Math.floor(Math.random() * kanjiData.length)];
-
-  // Randomly assign correct/incorrect to left/right
   const isCorrectLeft = Math.random() < 0.5;
 
-  // Hide Kanji and reset animation
   kanjiEl.classList.remove("visible");
   kanjiEl.textContent = q.kanji;
 
   fallingKanji.style.animation = "none";
   void fallingKanji.offsetWidth;
 
-  // Show Kanji again with fade-in and falling animation
   setTimeout(() => {
     kanjiEl.classList.add("visible");
     fallingKanji.style.animation = "fall 5s linear forwards";
-    fallSound.play(); // play falling sound
+    fallSound.play();
   }, 50);
 
-  // Assign text and handlers to buttons
   if (isCorrectLeft) {
     option1.textContent = q.correct;
     option2.textContent = q.incorrect;
@@ -72,7 +84,6 @@ const loadNewQuestion = () => {
     option2.onclick = () => answer(true);
   }
 
-  // Enable buttons
   option1.disabled = false;
   option2.disabled = false;
 };
@@ -84,22 +95,20 @@ const answer = (isCorrect) => {
   option1.disabled = true;
   option2.disabled = true;
 
-  // Play correct or incorrect sound
   if (isCorrect) {
     correctSound.play();
     score++;
-    document.body.style.backgroundColor = "#d0f8ce"; // light green
+    document.body.style.backgroundColor = "#d0f8ce";
   } else {
     wrongSound.play();
     score--;
-    document.body.style.backgroundColor = "#ffcdd2"; // light red
+    document.body.style.backgroundColor = "#ffcdd2";
   }
 
   scoreEl.textContent = score;
 
-  // Visual feedback and delay before next question
   setTimeout(() => {
-    document.body.style.backgroundColor = "#f0f0f0"; // reset background
+    document.body.style.backgroundColor = "#f0f0f0";
     kanjiEl.classList.remove("visible");
     setTimeout(() => loadNewQuestion(), 300);
   }, 300);
@@ -121,5 +130,5 @@ fallingKanji.addEventListener("animationend", () => {
   setTimeout(() => loadNewQuestion(), 500);
 });
 
-// Start first question
+// Start game
 loadNewQuestion();
