@@ -3,7 +3,24 @@ const kanjiData = [
   { kanji: "川", correct: "river", incorrect: "mountain" },
   { kanji: "森", correct: "forest", incorrect: "book" },
   { kanji: "山", correct: "mountain", incorrect: "forest" },
+  { kanji: "水", correct: "water", incorrect: "fire" },
+  { kanji: "火", correct: "fire", incorrect: "tree" },
+  { kanji: "木", correct: "tree", incorrect: "stone" },
+  { kanji: "石", correct: "stone", incorrect: "sky" },
+  { kanji: "空", correct: "sky", incorrect: "ground" },
+  { kanji: "土", correct: "earth", incorrect: "wind" },
+  { kanji: "風", correct: "wind", incorrect: "rain" },
+  { kanji: "雨", correct: "rain", incorrect: "sun" },
+  { kanji: "日", correct: "sun", incorrect: "moon" },
+  { kanji: "月", correct: "moon", incorrect: "sun" },
+  { kanji: "人", correct: "person", incorrect: "animal" },
+  { kanji: "犬", correct: "dog", incorrect: "cat" },
+  { kanji: "猫", correct: "cat", incorrect: "dog" },
+  { kanji: "魚", correct: "fish", incorrect: "bird" },
+  { kanji: "鳥", correct: "bird", incorrect: "fish" },
+  { kanji: "車", correct: "car", incorrect: "train" },
 ];
+
 
 let score = 0;
 const scoreEl = document.getElementById("score");
