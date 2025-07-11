@@ -14,6 +14,11 @@ const fallingKanji = document.getElementById("falling-kanji");
 
 let questionInProgress = false;
 
+// Sound effects
+const correctSound = new Audio("sounds/correct.wav");
+const wrongSound = new Audio("sounds/wrong.mp3");
+const fallSound = new Audio("sounds/fall.wav");
+
 const loadNewQuestion = () => {
   questionInProgress = true;
 
@@ -24,16 +29,17 @@ const loadNewQuestion = () => {
   const isCorrectLeft = Math.random() < 0.5;
 
   // Hide Kanji and reset animation
-  kanjiEl.classList.remove("visible"); // For fade-out
+  kanjiEl.classList.remove("visible");
   kanjiEl.textContent = q.kanji;
 
   fallingKanji.style.animation = "none";
-  void fallingKanji.offsetWidth; // Force reflow to reset animation
+  void fallingKanji.offsetWidth;
 
   // Show Kanji again with fade-in and falling animation
   setTimeout(() => {
-    kanjiEl.classList.add("visible"); // For fade-in
+    kanjiEl.classList.add("visible");
     fallingKanji.style.animation = "fall 5s linear forwards";
+    fallSound.play(); // play falling sound
   }, 50);
 
   // Assign text and handlers to buttons
@@ -61,25 +67,26 @@ const answer = (isCorrect) => {
   option1.disabled = true;
   option2.disabled = true;
 
-  // Feedback effect (optional flash color)
-  document.body.style.backgroundColor = isCorrect ? "#d0f8ce" : "#ffcdd2";
+  // Play correct or incorrect sound
+  if (isCorrect) {
+    correctSound.play();
+    score++;
+    document.body.style.backgroundColor = "#d0f8ce"; // light green
+  } else {
+    wrongSound.play();
+    score--;
+    document.body.style.backgroundColor = "#ffcdd2"; // light red
+  }
 
-  setTimeout(() => {
-    document.body.style.backgroundColor = "#f0f0f0"; // revert background
-  }, 200);
-
-  // Update score
-  score += isCorrect ? 1 : -1;
   scoreEl.textContent = score;
 
-  // Fade out kanji before next question
-  kanjiEl.classList.remove("visible");
-
+  // Visual feedback and delay before next question
   setTimeout(() => {
-    loadNewQuestion();
-  }, 500); // wait for fade-out
+    document.body.style.backgroundColor = "#f0f0f0"; // reset background
+    kanjiEl.classList.remove("visible");
+    setTimeout(() => loadNewQuestion(), 300);
+  }, 300);
 };
-
 
 fallingKanji.addEventListener("animationend", () => {
   if (!questionInProgress) return;
@@ -92,7 +99,6 @@ fallingKanji.addEventListener("animationend", () => {
   option1.disabled = true;
   option2.disabled = true;
 
-  // Fade out kanji before loading next
   kanjiEl.classList.remove("visible");
 
   setTimeout(() => loadNewQuestion(), 500);
